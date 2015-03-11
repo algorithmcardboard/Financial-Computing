@@ -1,4 +1,4 @@
-package in.rajegannathan.fincomp;
+package edu.nyu.cims.compfin14.hw2;
 
 public class Main {
 
