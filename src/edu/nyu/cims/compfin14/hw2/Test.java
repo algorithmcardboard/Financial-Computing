@@ -3,6 +3,7 @@ package edu.nyu.cims.compfin14.hw2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Anirudhan on 3/11/2015.
@@ -32,7 +33,33 @@ public class Test {
          * @return ; returns the yield-to-maturity of the bond for a particular price.
          */
         public double getYTM(Bond bond, double price){
-            return 0.0;
+            double nearMinYTM = 0.0d;
+            double nearMaxYTM = 1d;
+            boolean averageCalc = false;
+            Set<Map.Entry<Double, Double>> entries = bond.getCashFlow().entrySet();
+            while(nearMaxYTM - nearMinYTM > 0.0001d){
+                double tempPrice = 0.0d;
+                for(Map.Entry<Double, Double> e: bond.getCashFlow().entrySet()){
+                    tempPrice += e.getValue()*Math.pow(Math.E, (-1*nearMaxYTM*e.getKey()/100));
+                }
+//                System.out.println("tempPrice is "+tempPrice+ " "+nearMinYTM + " "+nearMaxYTM);
+                if(tempPrice > price){
+                    nearMinYTM = nearMaxYTM;
+                    nearMaxYTM *= 2;
+                }
+                if(tempPrice < price){
+//                    double temp = nearMaxYTM;
+                    nearMaxYTM = nearMinYTM + (nearMaxYTM - nearMinYTM)/2;
+                    averageCalc = true;
+//                    nearMinYTM = temp;
+//                    break;
+                }
+                if(tempPrice == price){
+                    break;
+                }
+//                break;
+            }
+            return nearMaxYTM;
         }
 
         /**
@@ -61,7 +88,7 @@ public class Test {
         double price = ycc.getPrice(new YieldCurve(), b);
 
         System.out.println(String.format("%.3f", price));
-        double ytm = ycc.getYTM(b,price);
-//        System.out.println(ytm);
+        double ytm = ycc.getYTM(b, price);
+        System.out.println("Q3. " + String.format("%.3d",ytm));
     }
 }

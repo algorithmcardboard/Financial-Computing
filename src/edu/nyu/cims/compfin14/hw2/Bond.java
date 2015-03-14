@@ -13,7 +13,7 @@ public class Bond {
     private double maturity;
     private double faceValue;
     private double frequency;
-    Map<Double, Double> cashFlow = new HashMap<Double, Double>();
+    private Map<Double, Double> cashFlow = new HashMap<Double, Double>();
 
     Bond(double faceValue, double maturity, double price){
         this.faceValue = faceValue;
@@ -25,7 +25,7 @@ public class Bond {
     Bond(double faceValue, double maturity, double price, double coponPercentage, double frequency){
         this.faceValue = faceValue;
         this.maturity = maturity;
-        this.copon = coponPercentage*faceValue/100;
+        this.copon = coponPercentage*faceValue*frequency/100;
 
         this.frequency = frequency;
         this.price = 0.0d;
