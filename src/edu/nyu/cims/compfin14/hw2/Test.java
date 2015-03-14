@@ -77,18 +77,20 @@ public class Test {
         bonds.add(new Bond(100d, 0.5, 95d));
         bonds.add(new Bond(1000d, 1, 895d));
 
-        YieldCurve yc = new YieldCurve(bonds);
-        System.out.println(yc);
+        System.out.println(new YieldCurve());
 
-        System.out.println(String.format("%.3f",yc.getInterestRate(0.75)));
+        YieldCurve yc = new YieldCurve(bonds);
+        System.out.println("Q2. a) "+ yc);
+
+        System.out.println("Q2. b) "+ String.format("%.3f",yc.getInterestRate(0.75))+"\n");
 
         Bond b = new Bond(500d, 3d, -1, 5, 0.5);
 
         YieldCurveCalculator ycc = new YieldCurveCalculator();
         double price = ycc.getPrice(new YieldCurve(), b);
 
-        System.out.println(String.format("%.3f", price));
+        System.out.println("Q3. a) "+ String.format("%.3f", price));
         double ytm = ycc.getYTM(b, price);
-        System.out.println("Q3. " + String.format("%.3d",ytm));
+        System.out.println("Q3. b) "+ String.format("%.3f",ytm));
     }
 }
