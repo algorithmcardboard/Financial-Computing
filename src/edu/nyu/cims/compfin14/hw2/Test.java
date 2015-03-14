@@ -77,10 +77,10 @@ public class Test {
         bonds.add(new Bond(100d, 0.5, 95d));
         bonds.add(new Bond(1000d, 1, 895d));
 
-        System.out.println(new YieldCurve());
+        System.out.println("Q1. a)\n"+new YieldCurve());
 
         YieldCurve yc = new YieldCurve(bonds);
-        System.out.println("Q2. a) "+ yc);
+        System.out.println("Q2. a) \n"+ yc);
 
         System.out.println("Q2. b) "+ String.format("%.3f",yc.getInterestRate(0.75))+"\n");
 
