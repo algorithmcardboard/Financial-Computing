@@ -2,6 +2,7 @@ package edu.nyu.cims.compfin14.hw2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Anirudhan on 3/11/2015.
@@ -15,7 +16,13 @@ public class Test {
          * @return Calculate the bond's fair price given a yield curve object.
          */
         public double getPrice(YieldCurve ycm, Bond bond){
-            return 0.0;
+            double price = 0.0d;
+            Map<Double, Double> cashFlow = bond.getCashFlow();
+            for(Map.Entry<Double, Double> e: cashFlow.entrySet()){
+//                System.out.println("time "+e.getKey()+" C "+e.getValue()+ " Interest rate "+ycm.getInterestRate(e.getKey()));
+                price += e.getValue()*Math.pow(Math.E, (-1*ycm.getInterestRate(e.getKey())*e.getKey()/100));
+            }
+            return price;
         }
 
         /**
@@ -47,5 +54,14 @@ public class Test {
         System.out.println(yc);
 
         System.out.println(String.format("%.3f",yc.getInterestRate(0.75)));
+
+        Bond b = new Bond(500d, 3d, -1, 5, 0.5);
+
+        YieldCurveCalculator ycc = new YieldCurveCalculator();
+        double price = ycc.getPrice(new YieldCurve(), b);
+
+        System.out.println(String.format("%.3f", price));
+        double ytm = ycc.getYTM(b,price);
+//        System.out.println(ytm);
     }
 }

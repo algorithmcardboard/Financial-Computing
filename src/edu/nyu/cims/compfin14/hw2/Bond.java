@@ -1,11 +1,19 @@
 package edu.nyu.cims.compfin14.hw2;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Anirudhan on 3/11/2015.
  */
 public class Bond {
+
+    private double price;
+    private double copon;
+    private double maturity;
+    private double faceValue;
+    private double frequency;
+    Map<Double, Double> cashFlow = new HashMap<Double, Double>();
 
     Bond(double faceValue, double maturity, double price){
         this.faceValue = faceValue;
@@ -14,17 +22,23 @@ public class Bond {
         this.price = price;
     }
 
-    Bond(double price, double copon, double maturity, double faceValue){
+    Bond(double faceValue, double maturity, double price, double coponPercentage, double frequency){
         this.faceValue = faceValue;
         this.maturity = maturity;
-        this.copon = copon;
-        this.price = price;
+        this.copon = coponPercentage*faceValue/100;
+
+        this.frequency = frequency;
+        this.price = 0.0d;
+        calculateCashFlow();
     }
 
-    private double price;
-    private double copon;
-    private double maturity;
-    private double faceValue;
+    private void calculateCashFlow() {
+//        cashFlow.put(0.0d, 0d);
+        for(double pf = frequency; pf < maturity; pf+=frequency){
+            cashFlow.put(pf, copon);
+        }
+        cashFlow.put(maturity,faceValue+copon);
+    }
 
     public double getPrice(){
         return price;
@@ -35,7 +49,7 @@ public class Bond {
     }
 
     public Map<Double, Double> getCashFlow(){
-        return null;
+        return cashFlow;
     }
 
     public double getFaceValue() {

@@ -13,6 +13,13 @@ public class YieldCurve {
         }
     }
 
+    public YieldCurve(){
+        yieldCurve.put(0.0d, 0.0d);
+        yieldCurve.put(1d,2d);
+        yieldCurve.put(2d,2.3);
+        yieldCurve.put(3d,3d);
+    }
+
     private void addYieldCurve(Bond b) {
         yieldCurve.put(b.getMaturity(), calculateRate(b));
     }
@@ -59,11 +66,14 @@ public class YieldCurve {
     }
 
     public double getForwardRate(double t0, double t1){
-        return 0.0;
+        double rt1 = getInterestRate(t0);
+        double rt2 = getInterestRate(t1);
+        return ((rt2 * t1) - (rt1 * t0)) / (t1 -t0);
     }
 
     public double getDiscountFactor(double t) {
-        return 0.0;
+        double rT = getInterestRate(t);
+        return Math.exp(rT * t);
     }
 
     @Override
