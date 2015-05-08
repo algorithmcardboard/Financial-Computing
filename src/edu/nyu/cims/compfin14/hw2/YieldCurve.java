@@ -2,6 +2,9 @@ package edu.nyu.cims.compfin14.hw2;
 
 import java.util.*;
 
+/**
+ * Given a list of bonds, we can calculate the yield curves of the bonds using this class.
+ */
 public class YieldCurve {
 
     Map<Double, Double> yieldCurve = new TreeMap<Double, Double>();
@@ -65,12 +68,22 @@ public class YieldCurve {
         return yieldCurve.get(time);
     }
 
+    /**
+     * returns the forward rate
+     * @param t0 time-0
+     * @param t1 time - 1
+     * @return the forward rate between time t0 and t1
+     */
     public double getForwardRate(double t0, double t1){
         double rt1 = getInterestRate(t0);
         double rt2 = getInterestRate(t1);
         return ((rt2 * t1) - (rt1 * t0)) / (t1 -t0);
     }
 
+    /**
+     * @param t
+     * @return the discount factor at time t
+     */
     public double getDiscountFactor(double t) {
         double rT = getInterestRate(t);
         return Math.exp(rT * t);

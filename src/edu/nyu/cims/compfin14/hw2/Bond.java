@@ -5,58 +5,13 @@ import java.util.Map;
 
 /**
  * Created by Anirudhan on 3/11/2015.
+ * Bond interface which must be implemented by both Zero Coupon and Coupon bearing bonds.
+ * T
  */
-public class Bond {
-
-    private double price;
-    private double copon;
-    private double maturity;
-    private double faceValue;
-    private double frequency;
-    private Map<Double, Double> cashFlow = new HashMap<Double, Double>();
-
-    Bond(double faceValue, double maturity, double price){
-        this.faceValue = faceValue;
-        this.maturity = maturity;
-        this.copon = 0;
-        this.price = price;
-    }
-
-    Bond(double faceValue, double maturity, double price, double coponPercentage, double frequency){
-        this.faceValue = faceValue;
-        this.maturity = maturity;
-        this.copon = coponPercentage*faceValue*frequency/100;
-
-        this.frequency = frequency;
-        this.price = 0.0d;
-        calculateCashFlow();
-    }
-
-    private void calculateCashFlow() {
-//        cashFlow.put(0.0d, 0d);
-        for(double pf = frequency; pf < maturity; pf+=frequency){
-            cashFlow.put(pf, copon);
-        }
-        cashFlow.put(maturity,faceValue+copon);
-    }
-
-    public double getPrice(){
-        return price;
-    }
-
-    public double getCopon() {
-        return copon;
-    }
-
-    public Map<Double, Double> getCashFlow(){
-        return cashFlow;
-    }
-
-    public double getFaceValue() {
-        return faceValue;
-    }
-
-    public double getMaturity() {
-        return maturity;
-    }
+public interface Bond {
+    public Map<Double, Double> getCashFlow();
+    public double getPrice();
+    public double getMaturity();
+    public double getFaceValue();
+    public double getCopon();
 }

@@ -42,22 +42,16 @@ public class Test {
                 for(Map.Entry<Double, Double> e: bond.getCashFlow().entrySet()){
                     tempPrice += e.getValue()*Math.pow(Math.E, (-1*nearMaxYTM*e.getKey()/100));
                 }
-//                System.out.println("tempPrice is "+tempPrice+ " "+nearMinYTM + " "+nearMaxYTM);
                 if(tempPrice > price){
                     nearMinYTM = nearMaxYTM;
                     nearMaxYTM *= 2;
                 }
                 if(tempPrice < price){
-//                    double temp = nearMaxYTM;
                     nearMaxYTM = nearMinYTM + (nearMaxYTM - nearMinYTM)/2;
-                    averageCalc = true;
-//                    nearMinYTM = temp;
-//                    break;
                 }
                 if(tempPrice == price){
                     break;
                 }
-//                break;
             }
             return nearMaxYTM;
         }
@@ -74,8 +68,8 @@ public class Test {
     }
     public static void main(String[] args){
         List<Bond> bonds = new ArrayList<Bond>();
-        bonds.add(new Bond(100d, 0.5, 95d));
-        bonds.add(new Bond(1000d, 1, 895d));
+        bonds.add(new ZeroCouponBond(100d, 0.5, 95d));
+        bonds.add(new ZeroCouponBond(1000d, 1, 895d));
 
         System.out.println("Q1. a)\n"+new YieldCurve());
 
@@ -84,7 +78,7 @@ public class Test {
 
         System.out.println("Q2. b) "+ String.format("%.3f",yc.getInterestRate(0.75))+"\n");
 
-        Bond b = new Bond(500d, 3d, -1, 5, 0.5);
+        Bond b = new CouponBearingBond(500d, 3d, -1, 5, 0.5);
 
         YieldCurveCalculator ycc = new YieldCurveCalculator();
         double price = ycc.getPrice(new YieldCurve(), b);
